@@ -3,15 +3,17 @@
         "local_server":"True",
         "local_uri":"mysql://root:@localhost/codeworld",
         "prod_uri":"mysql://root:@localhost/codeworld",
-        "fb_name":"https://facebook.com/codeworld",
-        "tw_name":"https://twitter.com/codeworld",
-        "gh_name":"https://github.com/codeworld",
+        "fb_name":"https://www.facebook.com/codeworld",
+        "tw_name":"https://www.twitter.com/codeworld",
+        "gh_name":"https://www.github.com/codeworld",
         "blog_name":"Code World",
         "tag_line":"A blog Liked By Programmers Hamza  ",
         "about_text":"Hey, This post is fetch by Database and also fetch by JSON File.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?",
         "username":"hamzaahmed.tech@gmail.com",
         "password":"jwlkrbhvhpilmvaz",
-        "no_of_post":5
+        "no_of_post":5,
+        "admin_user":"hamzaahmed.tech@gmail.com",
+        "admin_password":"123"
         
         }
 }

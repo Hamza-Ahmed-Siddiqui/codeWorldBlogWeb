@@ -25,8 +25,11 @@ app.config.update(
     MAIL_PASSWORD=params['password'],
 )
 mail=Mail(app)
+
+
 if(local_server):
     app.config['SQLALCHEMY_DATABASE_URI'] = params['local_uri']
+    
 
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = params['prod_uri']
@@ -77,6 +80,21 @@ def post_route(post_slug):
 @app.route("/about")
 def about():
     return render_template('about.html',params=params)
+
+
+@app.route("/dashboard",  methods = ['GET','POST'])
+def dashboard():
+    if request.method=='POST':
+        pass
+    else:
+        return render_template('login.html',params=params)
+        
+    
+    
+
+
+
+
 
 
 @app.route("/contact", methods = ['GET','POST'])
