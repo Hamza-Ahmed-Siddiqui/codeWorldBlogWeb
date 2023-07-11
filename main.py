@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask.globals import request
 from datetime import datetime
@@ -17,6 +17,7 @@ with open('config.json','r') as c:
 
 
 app = Flask(__name__)
+app.secret_key='super-secret-key'
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT='465',
@@ -67,6 +68,15 @@ def home():
     return render_template('index.html',params=params,posts=posts)
 
 
+
+# @app.route("/dashboards")
+# def dashboards():
+#     return render_template('dashboard.html',params=params)
+
+
+
+
+
 @app.route("/post/<string:post_slug>",methods=['GET'])
 def post_route(post_slug):
     post1 = Posts.query.filter_by(slug=post_slug).first()
@@ -80,19 +90,6 @@ def post_route(post_slug):
 @app.route("/about")
 def about():
     return render_template('about.html',params=params)
-
-
-@app.route("/dashboard",  methods = ['GET','POST'])
-def dashboard():
-    if request.method=='POST':
-        pass
-    else:
-        return render_template('login.html',params=params)
-        
-    
-    
-
-
 
 
 
@@ -118,5 +115,73 @@ def contact():
                           )
     #  =========================== mail End ======================
     return render_template('contact.html',params=params)
+
+
+
+@app.route("/dashboard",  methods = ['GET','POST'])
+def dashboard():
+
+
+    
+    if ('user' in session and session ['user'] == params['admin_user']):
+        posts=Posts.query.all()
+        return render_template('dashboard.html',params=params,posts=posts)
+        
+    
+    if request.method=='POST':
+        username = request.form.get('uemail')
+        userpass = request.form.get('upass')
+        if (username == params['admin_user'] and userpass == params['admin_password']):
+            #set the session variable
+            session['user']= username
+            posts=Posts.query.all()
+            return render_template('dashboard.html',params=params,posts=posts)
+            
+            
+        
+    
+    return render_template('login.html',params=params)
+        
+    
+    
+
+
+
+
+
+
+@app.route("/edit/<string:id>",  methods = ['GET','POST'])
+def edit(id):
+    if ('user' in session and session ['user'] == params['admin_user']):
+        if request.method=='POST':
+            box_title = request.form.get('title')
+            slug = request.form.get('slug')
+            content = request.form.get('content')
+            tagline = request.form.get('tagline')
+            date=datetime.now()
+            
+            if id == "0":
+                post= Posts(title=box_title,slug=slug,content=content,tagline=tagline,date=date)
+                db.session.add(post)
+                db.session.commit()
+                
+            else:
+                post=Posts.query.filter_by(id=id).first()
+                post.title=box_title
+                post.slug=slug
+                posst.content=content
+                post.tagline=tagline
+                post.date=date
+                db.session.commit()
+                return redirect('/edit/'+id)
+        post=Posts.query.filter_by(id=id).first()
+                
+        return render_template('edit.html',params=params,id=id)
+    
+
+
+
+
+
 
 app.run(debug=True)
