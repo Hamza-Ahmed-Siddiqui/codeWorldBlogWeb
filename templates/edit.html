@@ -20,8 +20,16 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- ===================== Todo fetch loop using jinja =========-->
+                    <h1> Basic Actions </h1>
 
-                    <h1> Add  Post </h1>
+
+                    <td> <a href="/dashboard" <button class="btn btn-primary" >Dashboard Home</button></td></a>
+                    <td> <a href="/logout" <button class="btn btn-primary" >LOGOUT</button></td></a>
+
+
+                    <hr>
+
+                    <h1> Add  Post /  Edit Post </h1>
 
 
 
@@ -35,19 +43,19 @@
 
                     <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="/edit/{{post.id}}" method="POST" >
                         <div class="form-floating">
-                            <input class="form-control" id="name" type="text" name="title" placeholder="Title"   data-sb-validations="required" />
+                            <input class="form-control" id="title" type="text"  name="title" placeholder="Title" value="{{post.title}} " data-sb-validations="required" />
                             <label for="name">Title</label>
                         </div>
                         <div class="form-floating">
-                            <input class="form-control" id="tagline" name="tagline" type="text" placeholder="Tagline" data-sb-validations="required,email" />
+                            <input class="form-control" id="tagline" name="tagline" type="text" placeholder="Tagline" value="{{post.tagline}}" data-sb-validations="required,email" />
                             <label for="email">Tagline</label>
                         </div>
                         <div class="form-floating">
-                            <input class="form-control" id="slug" type="text"  name="slug" placeholder="Slug" data-sb-validations="required" />
+                            <input class="form-control" id="slug" type="text"  name="slug" placeholder="Slug" value="{{post.slug}}" data-sb-validations="required" />
                             <label for="phone">Slug</label>
                         </div>
                         <div class="form-floating">
-                            <input class="form-control" id="content" name="content" placeholder="Content" style="height: 12rem" data-sb-validations="required"></input>
+                            <input class="form-control" id="content" name="content" placeholder="Content" value="{{post.content}}" style="height: 12rem" data-sb-validations="required"></input>
                             <label for="message">Content</label>
                         </div>
                        

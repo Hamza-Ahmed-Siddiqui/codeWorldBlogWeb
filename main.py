@@ -169,14 +169,14 @@ def edit(id):
                 post=Posts.query.filter_by(id=id).first()
                 post.title=box_title
                 post.slug=slug
-                posst.content=content
+                post.content=content
                 post.tagline=tagline
                 post.date=date
                 db.session.commit()
                 return redirect('/edit/'+id)
         post=Posts.query.filter_by(id=id).first()
                 
-        return render_template('edit.html',params=params,id=id)
+        return render_template('edit.html',params=params,post=post)
     
 
 
