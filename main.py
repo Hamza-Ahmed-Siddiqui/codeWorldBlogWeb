@@ -2,8 +2,11 @@ from flask import Flask,render_template,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask.globals import request
 from datetime import datetime
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import  FileStorage
+# from werkzeug import secure_filename,FileStorage
 
-
+import os                                    
 from flask_mail import Mail
 import json
 
@@ -18,6 +21,7 @@ with open('config.json','r') as c:
 
 app = Flask(__name__)
 app.secret_key='super-secret-key'
+app.config['UPLOAD_FOLDER']=params['upload_location']
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT='465',
@@ -69,10 +73,6 @@ def home():
 
 
 
-# @app.route("/dashboards")
-# def dashboards():
-#     return render_template('dashboard.html',params=params)
-
 
 
 
@@ -82,7 +82,36 @@ def post_route(post_slug):
     post1 = Posts.query.filter_by(slug=post_slug).first()
     
     
-    return render_template('post.html',params=params,post1=post1)
+    return render_template('post.html',params=params,post1=post1,slug=post_slug)
+
+
+# ========= Delete Post ================
+
+
+@app.route("/delete/<string:id>",methods=['GET',"POST"])
+def delete(id):
+    if ('user' in session and session ['user'] == params['admin_user']):
+        post = Posts.query.filter_by(id=id).first()
+        db.session.delete(post)
+        db.session.commit()
+    
+    # session.pop('user')
+    return redirect('/dashboard')
+        
+    
+
+
+
+#======== Logout =====
+
+@app.route("/logout")
+def logout():
+    
+    session.pop('user')
+    return redirect('/dashboard')
+
+
+
 
 
 
@@ -90,6 +119,22 @@ def post_route(post_slug):
 @app.route("/about")
 def about():
     return render_template('about.html',params=params)
+
+
+
+
+
+
+# Uploader
+
+@app.route("/uploader", methods = ['GET','POST'])
+def uploader():
+    if ('user' in session and session ['user'] == params['admin_user']):
+    
+        if (request.method=="POST"):
+            f=request.files['file1']
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename)))
+            return "Uploaded Successfully"
 
 
 

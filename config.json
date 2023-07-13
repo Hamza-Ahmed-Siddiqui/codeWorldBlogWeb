@@ -13,7 +13,8 @@
         "password":"jwlkrbhvhpilmvaz",
         "no_of_post":5,
         "admin_user":"hamzaahmed.tech@gmail.com",
-        "admin_password":"123"
+        "admin_password":"123",
+        "upload_location":"C:\\Users\\HAMZA\\3D Objects\\codeWorldBlogWeb\\static"
         
         }
 }

@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
+
+
+        <!--  if slug != slug redirect index page  -->
+
+        {% if post1.slug != slug  %}
+        <script> window.location="/"</script>
+
+        {%endif%}
+
+
         <!-- Page Header-->
         <header class="masthead" style="background-image: url('{{ url_for ('static',filename='assets/img/about-bg.jpg ')}} ')">
             <div class="container position-relative px-4 px-lg-5">
