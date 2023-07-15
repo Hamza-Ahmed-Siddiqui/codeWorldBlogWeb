@@ -5,7 +5,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 # from werkzeug import secure_filename,FileStorage
-
+import math
 import os                                    
 from flask_mail import Mail
 import json
@@ -68,8 +68,34 @@ class Posts(db.Model):
 
 @app.route("/")
 def home():
-    posts=Posts.query.filter_by().all()[0:params['no_of_post']]
-    return render_template('index.html',params=params,posts=posts)
+    posts=Posts.query.filter_by().all()
+    #[0:params['no_of_post']]
+    
+    last=math.ceil(len(posts)/int(params['no_of_post']))
+    
+    #pagination
+    page=request.args.get('page')
+    if (not str(page).isnumeric()):
+        page = 1
+        
+    page=int(page)
+    
+    
+    posts=posts[(page-1)*int(params['no_of_post']):(page-1)*int(params['no_of_post'])+int(params['no_of_post'])]
+    
+    if (page==1):
+        prev = "#"
+        nextt ="/?page="+str((page+1)) 
+    elif(page==last):
+        prev ="/?page="+str((page-1)) 
+        nextt = "#"
+    else:
+        prev ="/?page="+str((page-1)) 
+        nextt ="/?page="+str((page+1)) 
+        
+        
+    
+    return render_template('index.html',params=params,posts=posts,prev=prev,nextt=nextt)
 
 
 

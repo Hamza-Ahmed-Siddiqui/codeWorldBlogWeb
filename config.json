@@ -11,7 +11,7 @@
         "about_text":"Hey, This post is fetch by Database and also fetch by JSON File.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?",
         "username":"hamzaahmed.tech@gmail.com",
         "password":"jwlkrbhvhpilmvaz",
-        "no_of_post":5,
+        "no_of_post":2,
         "admin_user":"hamzaahmed.tech@gmail.com",
         "admin_password":"123",
         "upload_location":"C:\\Users\\HAMZA\\3D Objects\\codeWorldBlogWeb\\static"
